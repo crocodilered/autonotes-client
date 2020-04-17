@@ -1,0 +1,18 @@
+$primary-color: #1a237e;
+$light-color: #534bae;
+$dark-color: #000051;
+
+$body-bg: #F5F5F6;
+$body-color: #333;
+$body-color-invert: #eee;
+
+$primary: $primary-color;
+
+$enable-responsive-font-sizes: true;
+$font-size-base: 1.2rem;
+
+
+// Bootstrap and its default variables
+@import '../../node_modules/bootstrap/scss/bootstrap';
+// BootstrapVue and its default variables
+@import '../../node_modules/bootstrap-vue/src/index.scss';
