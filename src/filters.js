@@ -10,5 +10,7 @@ export function date (str) {
 
 
 export function thousands (str) {
-  return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+  return str 
+    ? str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+    : ''
 }
