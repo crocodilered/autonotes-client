@@ -42,7 +42,7 @@ const router = new Router({
       name: 'user-password',
       path: '/update-password/',
       component: () => import('@/views/users/password'),
-      meta: { anonymousOnly: true }
+      meta: { authOnly: true }
     }, 
   
     /*
