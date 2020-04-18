@@ -14,6 +14,7 @@
             v-model="makerTitle"
             :data="makers"
             :serializer="s => s.title"
+            :min-matching-chars="1"
             @hit="maker = $event"
           />
         </b-form-group>
@@ -28,6 +29,7 @@
             v-model="modelTitle"
             :data="models"
             :serializer="s => s.title"
+            :min-matching-chars="1"
             @hit="model = $event"
             disabled
           >
