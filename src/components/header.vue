@@ -29,7 +29,7 @@
 
         <hr>
 
-        <div v-if="vehicles.length">
+        <div v-if="vehicles && vehicles.length">
           <b-row v-for="(o, k) in vehicles" :key="`vehicle-${k}`" align-v="center" no-gutters class="menu-item">
             <b-col cols="auto">
               <icon-vehicle-0 v-if="k === 0"></icon-vehicle-0>
@@ -39,39 +39,25 @@
               <icon-vehicle-4 v-else-if="k === 4"></icon-vehicle-4>
               <icon-vehicle-5 v-else></icon-vehicle-5>
             </b-col>
-            <b-col><b-link :to="vehicleRetrieveHref(o)">{{ vehicleTitle(o) }}</b-link></b-col>
+            <b-col><b-link @click="hide()" :to="vehicleRetrieveHref(o)">{{ vehicleTitle(o) }}</b-link></b-col>
           </b-row>
         </div>
 
-        <hr v-if="vehicles.length">
+        <hr v-if="vehicles && vehicles.length">
 
         <b-row align-v="center" no-gutters class="menu-item">
           <b-col cols="auto"><icon-plus></icon-plus></b-col>
-          <b-col><b-link :to="vehicleCreateHref()">добавить автомобиль</b-link></b-col>
+          <b-col><b-link @click="hide()" :to="vehicleCreateHref()">добавить автомобиль</b-link></b-col>
         </b-row>
 
          <b-row align-v="center" no-gutters class="menu-item">
           <b-col cols="auto"><icon-password></icon-password></b-col>
-          <b-col><b-link to="/update-password/">Изменить пароль</b-link></b-col>
+          <b-col><b-link @click="hide()" to="/update-password/">Изменить пароль</b-link></b-col>
         </b-row>
 
         <b-row align-v="center" no-gutters class="menu-item">
           <b-col cols="auto"><icon-logout></icon-logout></b-col>
-          <b-col><b-link to="/logout/">Выход</b-link></b-col>
-        </b-row>
-
-        <hr>
-
-        <!--
-        <b-row align-v="center" no-gutters class="menu-item">
-          <b-col cols="auto"><icon-logout></icon-logout></b-col>
-          <b-col><b-link to="/feedback/">Обратная связь</b-link></b-col>
-        </b-row>
-        -->
-
-        <b-row align-v="center" no-gutters class="menu-item">
-          <b-col cols="auto"><icon-logout></icon-logout></b-col>
-          <b-col><b-link to="/logout/">О проекте</b-link></b-col>
+          <b-col><b-link @click="hide()" to="/logout/">Выход</b-link></b-col>
         </b-row>
         
       </b-container>
@@ -79,13 +65,13 @@
       <b-container v-else>
         <b-row align-v="center" no-gutters class="menu-item">
           <b-col cols="auto"><icon-login></icon-login></b-col>
-          <b-col><b-link to="/login/">Вход</b-link></b-col>
+          <b-col><b-link @click="hide()" to="/login/">Вход</b-link></b-col>
         </b-row>
         
         <b-row align-v="center" no-gutters class="menu-item">
           <b-col cols="auto"><icon-register></icon-register></b-col>
           <b-col>
-            <b-link to="/register/">Регистрация</b-link>
+            <b-link @click="hide()" to="/register/">Регистрация</b-link>
           </b-col>
         </b-row>
       </b-container>
@@ -136,6 +122,10 @@
       vehicleCreateHref,
       vehicleRetrieveHref,
       vehicleTitle,
+
+      hide () {
+        this.sidebarVisiblity = false
+      }
     },
 
     computed: mapState({
@@ -173,10 +163,6 @@
         a {
           text-transform: lowercase;
           text-decoration: none !important;
-
-          &.router-link-exact-active {
-            color: $body-color;
-          }
         }
 
         .material-design-icon {
