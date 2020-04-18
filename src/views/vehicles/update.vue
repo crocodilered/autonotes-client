@@ -3,13 +3,7 @@
     <an-subheader></an-subheader>
 
     <b-container>
-
-      <div v-if="done">
-        <p class="message">Данные об автомобиле обновлены.</p>
-        <b-button variant="outline-secondary" :to="vehicleRetrieveHref(vehicle)"><icon-arrow></icon-arrow></b-button>
-      </div>
-      
-      <form v-else ref="form" @submit.prevent="submit">
+      <form @submit.prevent="submit">
         <h2>Изменить авто</h2>
 
         <b-form-group
@@ -53,13 +47,12 @@
 
   import { GET_VEHICLE, UPDATE_VEHICLE } from '@/store/action-types'
   import InputSubmit from '@/components/common/input-submit'
-  import IconArrow from 'vue-material-design-icons/ArrowLeft.vue'
   import { vehicleRetrieveHref } from '@/helpers/vehicle'
 
   export default {
-    name: 'update-vehicle',
+    name: 'an-update-vehicle-view',
 
-    components: { AnSubheader, InputSubmit, IconArrow },
+    components: { AnSubheader, InputSubmit },
 
     data () {
       return {
@@ -67,7 +60,6 @@
         photo: null,
         year: null,
         yearState: null,
-        done: false,
         busy: false,
       }
     },
@@ -94,7 +86,7 @@
           id: this.vehicle.id, 
           data: formData
         })
-          .then(() => (this.done = true))
+          .then(() => this.$router.push(vehicleRetrieveHref(this.vehicle)))
           .catch(err=> console.log(err))
           .finally(() => this.busy = false)
       },
@@ -103,6 +95,7 @@
 
     created () {
       const vehicleId = this.$route.params.vehicleId
+  
       this.$store.dispatch(GET_VEHICLE, vehicleId)
         .then(vehicle => {
           this.vehicle = vehicle
