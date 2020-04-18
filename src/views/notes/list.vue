@@ -2,19 +2,20 @@
   <div>
     <an-subheader></an-subheader>
 
-    <b-container v-if="kind && notes && notes.length > 0">
-
+    <b-container v-if="kind && notes && notes.length > 0" style="margin-top:1rem;">
       <table class="notes">
         <tr v-for="(o, k) in notes" :key="`note-${k}`">
           <td><b-link :to="`./${o.id}/`">{{ o.title }}</b-link></td>
-          <td>{{ o.cost | thousands }} ₽</td>
+          <td><span v-show="o.cost">{{ o.cost | thousands }} ₽</span></td>
         </tr>
       </table>
     </b-container>
 
-    <b-container v-if="kind && notes && notes.length === 0">
+    <b-container v-if="kind && notes && notes.length === 0" style="margin-top:1rem;">
       <p class="message">Пока нет ни одной заметки.</p>
+      <b-button to="./create/">Добавить</b-button>
     </b-container>
+
   </div>
 </template>
 
@@ -25,7 +26,6 @@
 
   export default {
     name: 'an-list-notes-view',
-
     components: { AnSubheader },
 
     data () {
