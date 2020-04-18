@@ -43,8 +43,10 @@
     },
 
     created () {
-      this.$store.dispatch(LOAD_KINDS)
-        .then(kinds => (this.kinds = kinds))
+      if (this.user) {
+        this.$store.dispatch(LOAD_KINDS)
+          .then(kinds => (this.kinds = kinds))
+      }
     }
   }
 </script>
