@@ -5,6 +5,9 @@ node_modules
 # Serve media files while development process
 /public/media
 
+# No config 
+/src/api/config.js
+
 # local env files
 .env.local
 .env.*.local
