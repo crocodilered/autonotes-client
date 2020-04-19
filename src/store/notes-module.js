@@ -32,7 +32,7 @@ const actions = {
         NotesApi.listKinds()
           .then(kinds => {
             commit(KINDS, kinds)
-            resolve(kinds)
+            resolve(state.kinds)
           })
           .catch(err => reject(err))
       }
@@ -41,10 +41,7 @@ const actions = {
 
   // TODO: Ugly?
   [GET_KIND]({ state, dispatch }, slug) {
-    
-
-    
-
+  
     return new Promise((resolve, reject) => {
 
       const lookup = (kinds, slug) => {
