@@ -66,8 +66,8 @@ const router = new Router({
       meta: { authOnly: true }
     }, {
       name: 'notes-update',
-      path: '/notes/:kindSlug/:vehicleId(\\d+)/:noteId(\\d+)/create-update/',
-      component: () => import('@/views/notes/update'),
+      path: '/notes/:kindSlug/:vehicleId(\\d+)/:noteId(\\d+)/update/',
+      component: () => import('@/views/notes/create-update'),
       meta: { authOnly: true }
     }, {
       name: 'notes-delete',
