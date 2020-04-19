@@ -7,7 +7,7 @@
       <p><small>{{ note.created | date }}</small></p>
       <p v-if="note.run || note.cost">
         <span v-if="note.run">{{ note.run | thousands }} км.</span><span 
-          v-if="note.cost && note.run">,</span>
+          v-if="note.cost && note.run">, </span>
         <span v-if="note.cost">{{ note.cost | thousands }} руб.</span>
       </p>
       <p v-if="note.content" v-html="note.content.replace(/\n/g, '<br>')"></p>
