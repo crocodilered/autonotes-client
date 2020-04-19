@@ -2,7 +2,7 @@
   <div>
     <an-subheader></an-subheader>
 
-    <b-container v-if="note">
+    <b-container v-if="note" style="margin-top: 1rem;">
       <form @submit.prevent="submit">
         
         <b-form-group
@@ -82,7 +82,7 @@
           <b-form-file v-if="!note[`attachment${o.n}`] || o.updated" v-model="o.file"/>
         </b-form-group>
 
-        <an-input-submit @click="submit">Сохранить</an-input-submit>
+        <an-input-submit @click="submit" :busy="busy">Сохранить</an-input-submit>
       </form>
 
     </b-container>
@@ -142,10 +142,8 @@
 
         for (let k in this.attachments) {
           if (this.attachments[k].updated || this.attachments[k].file) {
-            data.append(
-              `attachment${parseInt(k+1)}`, 
-              this.attachments[k].file
-            )
+            const att = this.attachments[k]
+            data.append(`attachment${att.n}`, att.file)
           }
         }
 
