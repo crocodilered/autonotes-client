@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="retrieve-note">
     <an-subheader></an-subheader>
 
     <b-container v-if="note">
@@ -13,12 +13,11 @@
       <p v-if="note.content" v-html="note.content.replace(/\n/g, '<br>')"></p>
 
       <div v-for="(o, i) in [1, 2, 3]" :key="`attachment-${i}`">
-        <b-row v-if="note[`attachment${o}`]" no-gutters>
+        <b-row v-if="note[`attachment${o}`]" no-gutters class="attachment">
           <b-col cols="auto"><icon-file></icon-file></b-col>
           <b-col class="long-text"><a :href="note[`attachment${o}`]" target="blank">{{ getFilename(note[`attachment${o}`]) }}</a></b-col>
         </b-row>
       </div>
-
     </b-container>
 
     <hr>
@@ -71,6 +70,10 @@
   }
 </script>
 
-<style>
-
+<style lang="scss">
+  .retrieve-note {
+    .attachment {
+      margin: 0.5rem 0;
+    }
+  }
 </style>
