@@ -68,7 +68,7 @@
           />
         </b-form-group>
 
-        <an-input-submit :busy="busy" @click="submit">Сохранить</an-input-submit>
+        <an-input-submit :busy="busy">Сохранить</an-input-submit>
       </form>
     </b-container>
   </div>

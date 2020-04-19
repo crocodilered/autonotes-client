@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <form v-if="!error && !error401" @submit.stop.prevent="handleSubmit">
+    <form v-if="!error && !error401" @submit.prevent="login">
       
       <b-form-group
         :state="emailState"
@@ -35,10 +35,7 @@
         />
       </b-form-group>
 
-      <an-input-submit
-        :busy="busy"
-        @click="login"
-      >
+      <an-input-submit :busy="busy">
         Войти
       </an-input-submit>
     </form>

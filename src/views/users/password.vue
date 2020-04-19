@@ -54,10 +54,7 @@
         />
       </b-form-group>
 
-      <an-input-submit
-        :busy="busy"
-        @click="updatePassword"
-      >
+      <an-input-submit :busy="busy">
         Сохранить
       </an-input-submit>
     </form>

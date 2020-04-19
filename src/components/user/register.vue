@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <form @submit.stop.prevent="handleSubmit" v-if="!error400">
+    <form @submit.prevent="register" v-if="!error400">
       <b-form-group
         :state="emailState"
         label="Адрес эл. почты"
@@ -50,10 +50,7 @@
         />
       </b-form-group>
 
-      <an-input-submit
-        :busy="busy"
-        @click="register"
-      >
+      <an-input-submit :busy="busy">
         Зарегистрироваться
       </an-input-submit>
     </form>
