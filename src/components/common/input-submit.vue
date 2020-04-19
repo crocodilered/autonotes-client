@@ -8,6 +8,7 @@
       @hidden="onHidden"
     >
       <b-button
+        type="submit"
         ref="button"
         :disabled="busy"
         :variant="variant"
