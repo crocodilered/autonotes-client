@@ -30,29 +30,33 @@
       #a2hs {
         position: absolute;
         bottom: 0;
-        text-align: center;
         background-color: #000051;
         width: 100%;
+        color: white;
+        padding: 2rem 1rem;
       }
       #a2hs button {
-       border: none;
+       border: 2px solid white;
        color: white;
        background-color: transparent;
-       padding: 1rem;
        border-radius: 0.5rem;
-       margin: 2rem 0;
+       padding: 0.5rem 1rem;
+       margin-right: 1rem;
       }
     </style>
 
-    <script src="/index.js" defer></script>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but application doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
-    <div id="a2hs" style="display: none;">
-      <button>Добавить приложение<br> на главный экран</button>
+    <div id="a2hs" style="display1: none;">
+      <p>Добавить приложение на главный экран?</p>
+      <button id="a2hs-ok">Добавить</button>
+      <button id="a2hs-cancel">Нет</button>
     </div>
+
+    <script src="/index.js" defer></script>
   </body>
 </html>
