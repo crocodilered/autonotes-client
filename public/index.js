@@ -3,6 +3,7 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/service-worker.js')
 }
 
+
 let deferredPrompt;
 const a2hsPanel = document.getElementById('a2hs');
 
@@ -28,4 +29,5 @@ window.addEventListener('beforeinstallprompt', (e) => {
         deferredPrompt = null;
       });
   });
+
 });
