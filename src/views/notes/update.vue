@@ -109,8 +109,8 @@
         note: null,
 
         titleState: null,
-
         busy: false,
+        unsaved: undefined,
 
         attachments: [
           { n: 1, updated: false, file: null, },
@@ -126,6 +126,17 @@
       checkFormValidity () {
         this.titleState = Boolean(this.note.title)
         return this.titleState
+      },
+
+      confirmDestroy () {
+        return new Promise(resolve => {
+          this.$bvModal.msgBoxConfirm('Остались несохраненные данные, все равно уйти?', {
+            title: 'Внимание!',
+            cancelTitle: 'Отмена',
+            centered: true,
+          })
+            .then(value => resolve(value))
+        })
       },
 
       submit () {
@@ -148,7 +159,10 @@
         }
 
         NotesApi.patch(this.note.id, data)
-          .then(() => this.$router.push('../'))
+          .then(() => {
+            this.unsaved = false
+            this.$router.push('../')
+          })
           .catch(err => console.log(err))
           .finally(() => (this.busy = false))
       }
@@ -159,6 +173,24 @@
 
       NotesApi.get(noteId)
         .then(note => (this.note = note))
+    },
+
+    updated () {
+      // First time set false, others times - true
+      this.unsaved = this.unsaved === undefined
+        ? false
+        : true
+    },
+
+    beforeRouteLeave (to, from, next) {
+      if (this.unsaved) {
+         this.confirmDestroy()
+          .then(value => {
+            if (value) next()
+          })
+      } else {
+        next()
+      }
     }
   }
 </script>
