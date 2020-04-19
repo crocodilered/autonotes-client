@@ -57,7 +57,7 @@ const router = new Router({
     }, {
       name: 'notes-create',
       path: '/notes/:kindSlug/:vehicleId(\\d+)/create/',
-      component: () => import('@/views/notes/create'),
+      component: () => import('@/views/notes/create-update'),
       meta: { authOnly: true }
     }, {
       name: 'notes-retrieve',
@@ -66,7 +66,7 @@ const router = new Router({
       meta: { authOnly: true }
     }, {
       name: 'notes-update',
-      path: '/notes/:kindSlug/:vehicleId(\\d+)/:noteId(\\d+)/update/',
+      path: '/notes/:kindSlug/:vehicleId(\\d+)/:noteId(\\d+)/create-update/',
       component: () => import('@/views/notes/update'),
       meta: { authOnly: true }
     }, {

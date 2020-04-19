@@ -2,28 +2,25 @@
   <div>
     <an-subheader></an-subheader>
 
-    <b-container v-if="note" style="margin-top: 1rem;">
+    <b-container v-if="note && kind" style="margin-top: 1rem;">
       <form @submit.prevent="submit">
         
         <b-form-group
           :state="titleState"
-          label="Заголовок"
-          label-for="title-input"
           invalid-feedback="Необходимо указать заголовок."
         >
           <b-form-input 
             v-model="note.title"
+            placeholder="Заголовок"
             maxlength="200"
             id="title-input"
             required
           />
         </b-form-group>
 
-        <b-form-group
-          label="Описание"
-          label-for="content-input"
-        >
+        <b-form-group>
           <b-form-textarea 
+            placeholder="Описание"
             v-model="note.content"
             rows="3"
             id="conetnt-input"
@@ -33,26 +30,26 @@
         <b-form-row>
           <b-col>
             <b-form-group
-              label="Стоимость, руб."
-              label-for="cost-input"
+              :state="costState"
+              invalid-feedback="Должно быть числом."
             >
               <b-form-input
+                placeholder="Стоимость, руб."
                 v-model="note.cost"
-                type="number"
-                number
+                :formatter="thousandsFormatter"
                 min="0"
               />
             </b-form-group>
           </b-col>
           <b-col>
             <b-form-group
-              label="Пробег, км."
-              label-for="run-input"
+              :state="runState"
+              invalid-feedback="Должно быть числом."
             >
               <b-form-input
+                placeholder="Пробег, км."
                 v-model="note.run"
-                type="number"
-                number
+                :formatter="thousandsFormatter"
                 min="0"
               />
             </b-form-group>
@@ -62,7 +59,6 @@
         <b-form-group
           v-for="(o, k) in attachments"
           :key="`attachment-${k}`"
-          :label="`Файл ${o.n}`"
         >
           <b-row v-if="note[`attachment${o.n}`] && !o.updated">
             <b-col class="long-text">
@@ -79,10 +75,15 @@
               </b-button>
             </b-col>
           </b-row>
-          <b-form-file v-if="!note[`attachment${o.n}`] || o.updated" v-model="o.file"/>
+          <b-form-file
+            v-if="!note[`attachment${o.n}`] || o.updated" 
+            v-model="o.file" 
+            :placeholder="`Файл ${o.n}`"
+            browse-text="+"
+          />
         </b-form-group>
 
-        <an-input-submit @click="submit" :busy="busy">Сохранить</an-input-submit>
+        <an-input-submit :busy="busy">Сохранить</an-input-submit>
       </form>
 
     </b-container>
@@ -94,10 +95,13 @@
   import AnInputSubmit from '@/components/common/input-submit'
 
   import { NotesApi } from '@/api/server'
+  import { GET_KIND, GET_VEHICLE } from '@/store/action-types'
   import { getFilename } from '@/helpers/note'
 
   import IconUpdateAttachment from 'vue-material-design-icons/Pencil.vue'
   import IconDeleteAttachment from 'vue-material-design-icons/DeleteOutline.vue'
+
+  import { thousands } from '@/filters'
 
   export default {
     name: 'an-update-note-view',
@@ -107,8 +111,13 @@
     data () {
       return {
         note: null,
+        kind: null,
+        vehicle: null,
 
         titleState: null,
+        runState: null,
+        costState: null,
+
         busy: false,
         unsaved: undefined,
 
@@ -123,9 +132,31 @@
     methods: {
       getFilename,
 
+      replaceWs (s) {
+        if (!s) return s
+        let str = String(s)
+        return str.replace(' ', '')
+      },
+
+      thousandsFormatter (s) {
+        if (!s) return ''
+        return thousands(this.replaceWs(s))
+      },
+
+      isInt (s) {
+        return (
+          s === null || 
+          s === undefined || 
+          s === '' || 
+          !isNaN(Number(this.replaceWs(s)))
+        )
+      },
+
       checkFormValidity () {
         this.titleState = Boolean(this.note.title)
-        return this.titleState
+        this.costState = this.isInt(this.note.cost)
+        this.runState = this.isInt(this.note.run)
+        return this.titleState && this.costState && this.runState
       },
 
       confirmDestroy () {
@@ -148,8 +179,9 @@
         
         data.append('title', this.note.title)
         data.append('content', this.note.content)
-        data.append('run', this.note.run)
-        data.append('cost', this.note.cost)
+
+        data.append('run', this.replaceWs(this.note.run))
+        data.append('cost', this.replaceWs(this.note.cost))
 
         for (let k in this.attachments) {
           if (this.attachments[k].updated || this.attachments[k].file) {
@@ -158,7 +190,17 @@
           }
         }
 
-        NotesApi.patch(this.note.id, data)
+        let p
+
+        if (this.note.id) {
+          p = NotesApi.patch(this.note.id, data)
+        } else {
+          data.append('kind', this.kind.id)
+          data.append('vehicle', this.vehicle.id)
+          p = NotesApi.create(data)
+        }
+
+        p
           .then(() => {
             this.unsaved = false
             this.$router.push('../')
@@ -170,13 +212,33 @@
 
     created () {
       const noteId = this.$route.params.noteId
+      const vehicleId = this.$route.params.vehicleId
+      const kindSlug = this.$route.params.kindSlug
 
-      NotesApi.get(noteId)
-        .then(note => (this.note = note))
+      this.$store.dispatch(GET_VEHICLE, vehicleId)
+        .then(vehicle => (this.vehicle = vehicle))
+  
+      this.$store.dispatch(GET_KIND, kindSlug)
+        .then(kind => (this.kind = kind))
+
+      if (noteId) {
+         NotesApi.get(noteId)
+          .then(note => (this.note = note))
+      } else {
+          this.note = {
+            title: '',
+            content: '',
+            run: null,
+            cost: null,
+            attachment1: null,
+            attachment2: null,
+            attachment3: null,
+          }
+      }
     },
 
     updated () {
-      // First time set false, others times - true
+      // First time set false
       this.unsaved = this.unsaved === undefined
         ? false
         : true
