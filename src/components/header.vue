@@ -24,7 +24,7 @@
 
         <b-row align-v="center" class="menu-item" no-gutters>
           <b-col cols="auto"><icon-profile></icon-profile></b-col>
-          <b-col>{{ user.email }}</b-col>
+          <b-col style="text-overflow: ellipsis; overflow: hidden;">{{ user.email }}</b-col>
         </b-row>
 
         <hr>

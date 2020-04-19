@@ -62,6 +62,7 @@
       &:last-child {
         padding-left: 1rem;
         text-align: right;
+        white-space: nowrap;
       }
     }
   }
