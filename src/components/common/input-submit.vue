@@ -2,9 +2,7 @@
   <div class="input-submit">
     <b-overlay
       :show="busy"
-      rounded
       opacity="0.6"
-      spinner-small
       spinner-variant="primary"
       class="d-inline-block"
       @hidden="onHidden"
