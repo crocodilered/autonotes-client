@@ -16,9 +16,9 @@
     </template>
 
     <template v-if="!user">
-      <h1 style="font-size:2.7rem;">Учет<br> расходов<br> <nobr>на машину</nobr></h1>
+      <h1 style="font-size:2.7rem;">Учет<br> расходов<br> <nobr>на автомобиль</nobr></h1>
       <p style="font-size:120%; margin: 2rem 0;">
-        История обслуживания, ремонта и тюнинга вашего автомобиля.
+        История и учет обслуживания, ремонта и тюнинга вашего авто.
       </p>
       <p style="margin: 2rem 0;">
         <b-button to="/register/" variant="primary" size="lg">Зарегистрироваться</b-button>
