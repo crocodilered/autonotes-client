@@ -20,9 +20,9 @@
       </div>
     </b-container>
 
-    <hr>
+    <hr style="margin: 2rem 0;">
 
-    <b-container class="toolbar" style="margin-top: 2rem;">
+    <b-container class="toolbar">
       <b-row align-h="end">
         <b-col cols="auto">
           <b-button variant="outline-secondary" style="margin-right:0.5rem;" to="./update/">
