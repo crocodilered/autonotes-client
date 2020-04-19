@@ -1,11 +1,18 @@
 <template>
   <div v-if="vehicle">
     <an-subheader></an-subheader>
-    <b-container>
+    
+    <b-container v-if="vehicle.notes_count === 0">
       <h1>Внимание!</h1>
       <p>Данные об автомобиле «{{ vehicleTitle(vehicle) }}» будут удалены. Вы уверены?</p>
-      <input-submit danger @click="submit">Удалить</input-submit>
+      <input-submit danger :busy="busy" @click="submit">Удалить</input-submit>
     </b-container>
+
+    <b-container v-else class="mt-4">
+      <p class="message">Автомобиль «{{ vehicleTitle(vehicle) }}» не может быть удален, так как о нем имеются заметки.</p>
+      <p>Позже мы этот вопрос победим, а пока вот так.</p>
+    </b-container>
+
   </div>
 </template>
 
