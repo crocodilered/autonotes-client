@@ -1,4 +1,4 @@
-import { AUTH_KEY, AUTH_HAS_USER } from './config'
+import { AUTH_KEY, AUTH_HAS_USER } from '@/config'
 
 export const getToken = () => {
   return window.localStorage.getItem(AUTH_KEY)

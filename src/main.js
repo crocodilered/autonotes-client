@@ -9,11 +9,10 @@ import App from '@/app'
 import Server from '@/api/server'
 import store from '@/store'
 import router from '@/router'
+import { date as dateFilter, thousands as thousandsFilter } from '@/filters'
+import { GTAG_ID } from '@/config'
 
 import 'vue-material-design-icons/styles.css'
-
-import { date as dateFilter, thousands as thousandsFilter } from '@/filters'
-import { GTAG_ID } from '@/api/config'
 
 Vue.config.productionTip = false
 

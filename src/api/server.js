@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import { SERVER_URL } from './config'
+import { SERVER_URL } from '@/config'
 
 
 const Server = {
