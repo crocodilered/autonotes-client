@@ -28,12 +28,10 @@
       <p style="font-size:120%; margin: 2rem 0;">
         История и учет обслуживания, ремонта и тюнинга вашего авто.
       </p>
-      <p style="margin: 2rem 0;">
+      <div>
         <b-button to="/register/" variant="primary" size="lg">Зарегистрироваться</b-button>
-      </p>
-      <p>
-        <b-button to="/login/" variant="outline-primary" size="lg">Войти</b-button>
-      </p>
+        <b-button to="/login/" variant="link" size="lg">Войти</b-button>
+      </div>
     </b-container>
 
   </div>
