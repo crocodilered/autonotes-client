@@ -4,11 +4,11 @@
     <form @submit.prevent="register" v-if="!error400">
       <b-form-group
         :state="emailState"
-        label="Адрес эл. почты"
         invalid-feedback="Необходимо заполнить это поле."
         label-for="email-input"
       >
         <b-form-input
+          placeholder="Электронная почта"
           type="email"
           id="email-input"
           ref="email-input"
@@ -20,11 +20,11 @@
 
       <b-form-group
         :state="passwordState"
-        label="Пароль"
         label-for="password-input"
         invalid-feedback="Необходимо заполнить это поле."
       >
         <b-form-input
+          placeholder="Пароль"
           type="password"
           id="password-input"
           ref="password-input"
@@ -36,11 +36,11 @@
 
       <b-form-group
         :state="password2State"
-        label="Еще раз пароль"
         label-for="password2-input"
         invalid-feedback="Необходимо заполнить это поле."
       >
         <b-form-input
+          placeholder="Еще раз пароль"
           type="password"
           id="password2-input"
           ref="password2-input"

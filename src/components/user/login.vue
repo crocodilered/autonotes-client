@@ -5,34 +5,34 @@
       
       <b-form-group
         :state="emailState"
-        label="Адрес эл. почты"
         invalid-feedback="Необходимо заполнить это поле."
         label-for="login-email-input"
       >
         <b-form-input
+          placeholder="Электронная почта"
           type="email"
           id="login-email-input"
           ref="email-input"
           v-model="email"
           :state="emailState"
           required
-        />
+        ></b-form-input>
       </b-form-group>
 
       <b-form-group
         :state="passwordState"
-        label="Пароль"
         invalid-feedback="Необходимо заполнить это поле."
         label-for="login-password-input"
       >
         <b-form-input
+          placeholder="Пароль"
           type="password"
           id="login-password-input"
           ref="password-input"
           v-model="password"
           :state="passwordState"
           required
-        />
+        ></b-form-input>
       </b-form-group>
 
       <an-input-submit :busy="busy">
@@ -58,7 +58,7 @@
   
   export default {
     name: 'an-user-login',
-    components: { AnInputSubmit },
+    components: { AnInputSubmit, },
 
     data () {
       return {
