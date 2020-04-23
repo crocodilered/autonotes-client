@@ -1,6 +1,7 @@
 import '@babel/polyfill'
 import 'mutationobserver-shim'
 import Vue from 'vue'
+import VueGtag from 'vue-gtag'
 
 import '@/plugins/bootstrap-vue'
 
@@ -12,17 +13,27 @@ import router from '@/router'
 import 'vue-material-design-icons/styles.css'
 
 import { date as dateFilter, thousands as thousandsFilter } from '@/filters'
+import { GTAG_ID } from '@/api/config'
 
 Vue.config.productionTip = false
-
-Server.init()
 
 Vue.filter('date', dateFilter)
 Vue.filter('thousands', thousandsFilter)
 
-const payload = {
+const gTagOptions = {
+  config: { id: GTAG_ID },
+  appName: 'Autonotes',
+  pageTrackerScreenviewEnabled: true,
+}
+
+Vue.use(VueGtag, gTagOptions, router)
+
+Server.init()
+
+const vueOptions = {
   store,
   router,
   render: h => h(App),
 }
-new Vue(payload).$mount('#app')
+
+new Vue(vueOptions).$mount('#app')
