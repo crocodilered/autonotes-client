@@ -1,21 +1,29 @@
 <template>
-  <b-container>
+  <div>
     
     <template v-if="user && vehicles && vehicles.length > 0 && kinds">
-      <b-row v-for="(o, k) in vehicles" :key="`vehicle-${k}`" align-v="center" no-gutters class="vehicle">
-        <b-col cols="auto"><b-avatar variant="outline-primary" style="border: 2px solid var(--primary);" :src="vehiclePhoto(o)" size="4rem"></b-avatar></b-col>
-        <b-col class="message"><b-link :to="vehicleRetrieveHref(o)">{{ vehicleTitle(o) }}</b-link></b-col>
-      </b-row>
+
+      <div
+        v-for="(o, k) in vehicles"
+        :key="`vehicle1-${k}`"
+        class="vehicle"
+        @click="goVehicle(o)"
+        :style="{backgroundImage: `url(${vehiclePhoto(o)})`}"
+      >
+        <h2>{{ vehicleTitle(o) }}</h2>
+        <h2 class="z2">{{ vehicleTitle(o) }}</h2>
+      </div>
+
     </template>
 
-    <template v-if="user && vehicles && vehicles.length === 0">
+    <b-container v-if="user && vehicles && vehicles.length === 0">
       <h1>Для начала</h1>
       <p class="message">
         Необходимо <b-link :to="vehicleCreateHref()">добавить автомобиль</b-link>.
       </p>
-    </template>
+    </b-container>
 
-    <template v-if="!user">
+    <b-container v-if="!user">
       <h1 style="font-size:2.7rem;">Учет<br> расходов<br> <nobr>на автомобиль</nobr></h1>
       <p style="font-size:120%; margin: 2rem 0;">
         История и учет обслуживания, ремонта и тюнинга вашего авто.
@@ -26,9 +34,9 @@
       <p>
         <b-button to="/login/" variant="outline-primary" size="lg">Войти</b-button>
       </p>
-    </template>
+    </b-container>
 
-  </b-container>
+  </div>
 </template>
 
 <script>
@@ -44,6 +52,11 @@
       vehiclePhoto,
       vehicleRetrieveHref,
       vehicleCreateHref,
+
+      goVehicle (vehicle) {
+        const href = vehicleRetrieveHref(vehicle)
+        this.$router.push(href)
+      }
     },
 
     computed: {
@@ -70,10 +83,23 @@
 
 <style lang="scss">
   .vehicle {
-    margin: 1rem 0;
+    max-width: 550px !important;
+    margin: 0 auto;
+    height: 200px;
+    background-size: 100%;
+    padding: 130px 10px 0 0;
+    cursor: pointer;
 
-    .col-auto {
-      margin-right: 1rem;
+    h2 {
+      position: absolute;
+      margin: 0;
+      font-size: 22px;
+      padding: 10px 15px;
+
+      &.z2 {
+        background: white;
+        opacity: 0.8;
+      }
     }
   }
 </style>
