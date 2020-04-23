@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dashboard-view">
     
     <template v-if="user && vehicles && vehicles.length > 0 && kinds">
 
@@ -23,12 +23,12 @@
       </p>
     </b-container>
 
-    <b-container v-if="!user">
+    <b-container v-if="!user" class="enter">
       <h1 style="font-size:2.7rem;">Учет<br> расходов<br> <nobr>на автомобиль</nobr></h1>
       <p style="font-size:120%; margin: 2rem 0;">
         История и учет обслуживания, ремонта и тюнинга вашего авто.
       </p>
-      <div>
+      <div class="buttons">
         <b-button to="/register/" variant="primary" size="lg">Зарегистрироваться</b-button>
         <b-button to="/login/" variant="link" size="lg">Войти</b-button>
       </div>
@@ -80,24 +80,42 @@
 </script>
 
 <style lang="scss">
-  .vehicle {
-    max-width: 550px !important;
-    margin: 0 auto;
-    height: 200px;
-    background-size: 100%;
-    padding: 130px 10px 0 0;
-    cursor: pointer;
+  .dashboard-view {
 
-    h2 {
-      position: absolute;
-      margin: 0;
-      font-size: 22px;
-      padding: 10px 15px;
+    .enter {
+      .btn {
+        display: block;
+        text-align: left;
+        padding-top: 1.2rem;
+        padding-bottom: 1.2rem;
 
-      &.z2 {
-        background: white;
-        opacity: 0.8;
+        &:last-child {
+          border-bottom: 2px solid var(--primary);
+          border-radius: 0;
+        }
       }
     }
+
+    .vehicle {
+      max-width: 550px !important;
+      margin: 0 auto;
+      height: 200px;
+      background-size: 100%;
+      padding: 130px 10px 0 0;
+      cursor: pointer;
+
+      h2 {
+        position: absolute;
+        margin: 0;
+        font-size: 22px;
+        padding: 10px 15px;
+
+        &.z2 {
+          background: white;
+          opacity: 0.8;
+        }
+      }
+    }
+
   }
 </style>
